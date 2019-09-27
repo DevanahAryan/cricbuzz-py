@@ -161,7 +161,7 @@ def glivescore(n):
 	
 	teamd = dict()
 	if n > len(id_list):
-		print( "Error : Invalid !")
+		return ['invalid match number']
 		exit()
 	n = n - 1
 	mch = x[str(id_list[n])]
@@ -170,10 +170,9 @@ def glivescore(n):
 	team2 = mch['team2']
 	teamd[str(team2['id'])] = team2['name']
 	if mch['status'] == "":
-		msg = "Upcoming"
-		print(msg)
+		return ['Upcoming']
 	elif mch['state_title'] == 'Abandon':
-		print("\n Status = {} ".format(mch['status']))
+		return [match['Status']]
 	else:
 		scores = mch['score']
 		batting = scores['batting']
