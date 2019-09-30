@@ -1,28 +1,35 @@
 import requests
 import json
-try:
-	r=requests.get('https://www.cricbuzz.com/match-api/livematches.json')
-except Exception as e:
-	print("Connection error")
-	exit()
-
-
-
-
-r_text = r.text
-file = open('data.json',"w")
-data = json.loads(r_text)
-
-#json.dump(data,open('data.json',"w"),indent=4)
-x=data['matches']
 
 id_list=list()
-choice=0
+try:
+	r=requests.get('https://www.cricbuzz.com/match-api/livematches.json')
+	r_text = r.text
+except Exception as e:
+	print("Connection_error")
+	exit()
 
-for key,value in x.items():
-	id_list.append(key)
+file = open('data.json',"w")
+data = json.loads(r_text)
+x=data['matches']
+
+def fchdata():
+	try:
+		global r,r_text,file,data,x,id_list
+		r=requests.get('https://www.cricbuzz.com/match-api/livematches.json')
+		r_text = r.text
+		file = open('data.json',"w")
+		data = json.loads(r_text)
+		x=data['matches']
+		id_list.clear()
+		for key,value in x.items():
+			id_list.append(key)
+	except Exception as e:
+		print("Connection error")
+		exit()
 
 def pmatchlist():
+	fchdata()
 	n = 0
 	for match in id_list:
 		t = str(match)
@@ -36,6 +43,7 @@ def pmatchlist():
 	return 0;
 
 def gmatchlist():
+	fchdata()
 	n = 0
 	listmatch = list()
 	for match in id_list:
@@ -52,6 +60,7 @@ def gmatchlist():
 		
 
 def gteam1players(n):
+	fchdata()
 	plyrs = get_players(n)
 	t1players = list()
 	t1bench = list()
@@ -72,6 +81,7 @@ def gteam1players(n):
 
 
 def gteam2players(n):
+	fchdata()
 	plyrs = get_players(n)
 	t2players = list()
 	t2bench = list()
@@ -91,6 +101,7 @@ def gteam2players(n):
 	return t2players,t2bench
 
 def get_players(n):
+	fchdata()
 	teamp =dict()
 	if n > len(id_list):
 		print( "Error : Invalid !")
@@ -104,6 +115,7 @@ def get_players(n):
 	return teamp
 
 def plivescore(n):
+	fchdata()
 	teamp = get_players(n)
 	
 	teamd = dict()
@@ -157,6 +169,7 @@ def plivescore(n):
 
 
 def glivescore(n):
+	fchdata()
 	teamp = get_players(n)
 	
 	teamd = dict()
